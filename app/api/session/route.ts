@@ -1,5 +1,8 @@
 import { env } from 'cloudflare:workers';
-import { isSurveyOwner } from '@/lib/admin';
+import { verifyAdminIdentity } from '@/lib/admin';
+import { privateHeaders } from '@/lib/request-guard';
+export const dynamic='force-dynamic';
 export async function GET(req:Request){
- return Response.json({canManage:isSurveyOwner(req.headers,env.ADMIN_EMAIL)},{headers:{'Cache-Control':'private, no-store','Vary':'Cookie'}});
+ const authenticatedAdmin=await verifyAdminIdentity(req.headers,env);
+ return Response.json({authenticatedAdmin,canManage:env.ADMIN_ACCESS_ENABLED==='true'&&authenticatedAdmin},{headers:privateHeaders});
 }

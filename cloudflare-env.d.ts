@@ -2,6 +2,8 @@ declare namespace Cloudflare {
   interface Env {
     DB?: D1Database;
     ADMIN_EMAIL?: string;
-    BUCKET?: R2Bucket;
+    ACCESS_TEAM_DOMAIN?: string;
+    ACCESS_AUD?: string;
+    ADMIN_ACCESS_ENABLED?: string;
   }
 }

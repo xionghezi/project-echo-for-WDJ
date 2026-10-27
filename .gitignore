@@ -30,6 +30,24 @@ yarn-error.log*
 .env*
 .dev.vars*
 *.pem
+*.key
+*.p12
+/wrangler.local.json
+/deploy-config.local.json
+*.csv
+*.sqlite*
+*.db
+*.db-*
+*.sql.gz
+*.sql.dump
+*.dump
+*.bak
+/data/
+/exports/
+/backups/
+/test-results/
+/playwright-report/
+/.pnpm-store/
 
 # Checkout-local tool state
 /.wrangler/
