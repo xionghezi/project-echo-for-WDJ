@@ -4,9 +4,16 @@ import { eq } from 'drizzle-orm';
 import { validateSubmission, VERSION } from '@/lib/survey';
 const noStore={'Cache-Control':'no-store'};
 export async function POST(req:Request){
- if(req.headers.get('origin')!==new URL(req.url).origin)return Response.json({error:'请求来源不匹配，请刷新页面后重试。'},{status:403,headers:noStore});
- if(!req.headers.get('content-type')?.includes('application/json'))return Response.json({error:'不支持的提交格式。'},{status:415,headers:noStore});
- if(Number(req.headers.get('content-length')||0)>16000)return Response.json({error:'内容过长。'},{status:413,headers:noStore});
+ async function reject(error:string,status:number){
+  try{
+   const reader=req.body?.getReader();let size=0;
+   if(reader)while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>16000){await reader.cancel();break}}
+  }catch{}
+  return Response.json({error},{status,headers:noStore});
+ }
+ if(req.headers.get('origin')!==new URL(req.url).origin)return reject('请求来源不匹配，请刷新页面后重试。',403);
+ if(!req.headers.get('content-type')?.includes('application/json'))return reject('不支持的提交格式。',415);
+ if(Number(req.headers.get('content-length')||0)>16000)return reject('内容过长。',413);
  let payload:unknown;
  try{const raw=await req.text();if(raw.length>16000)return Response.json({error:'内容过长。'},{status:413,headers:noStore});payload=JSON.parse(raw)}catch{return Response.json({error:'提交格式无效，请刷新页面后重试。'},{status:400,headers:noStore})}
  const parsed=validateSubmission(payload);

@@ -1,0 +1,10 @@
+{
+  "workerName": "project-echo",
+  "accountId": "",
+  "databaseName": "project-echo",
+  "databaseId": "",
+  "hostname": "",
+  "accessTeamDomain": "",
+  "accessAudience": "",
+  "adminAccessEnabled": false
+}
