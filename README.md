@@ -139,7 +139,7 @@ flowchart TD
 
 ## 7. 独立 Cloudflare Workers 部署（Windows PowerShell）
 
-此副本基于 GitHub 提交 `9ad9d37`，迁移代码已在本地验证，**没有发布、推送、修改原 Sites 正式站点，也没有迁移实际答卷**。新 D1 初始为空。原域名的草稿属于原域名的 localStorage，浏览器不会自动将它带到新域名。
+此改动基于 GitHub 提交 `9ad9d37`，迁移代码已在本地验证，并提交到原仓库的迁移分支供审阅；**没有部署网站、修改原 Sites 正式站点，也没有迁移实际答卷**。新 D1 初始为空。原域名的草稿属于原域名的 localStorage，浏览器不会自动将它带到新域名。
 
 保留锁定版本 Vinext 1.0.0-beta.5、Vite 8.0.13、Cloudflare Vite 插件 1.37.1、Wrangler 4.92.0；核对了该版本随 npm 包发布的 README 和初始化代码。采用该版本官方的 Cloudflare Vite 插件 RSC/SSR 构建输出，再用 Wrangler 部署 `dist/server/wrangler.json`。不运行最新初始化器，不升级到当前文档中的 Vite 插件 v2/cf 配置，不使用 Sites 构建或控制平面。
 
